@@ -18,9 +18,11 @@ public class InformationPane extends GridPane {
     private TextField nameField;
 
     // add a textfield attribute for the email
-    private TextField colorField;
+    private TextField emailField;
     // add a textfield attribute for the phone
-    private TextField animalField;
+    private TextField gNumField;
+
+    private TextField errorField;
 
     // add a submit button attribute
     private Button submitButton;
@@ -29,13 +31,14 @@ public class InformationPane extends GridPane {
 
     // step 1; declare a Checkbox attribute
     // add checkbox attribute
-    private CheckBox yellowBox;
-    private CheckBox pinkBox;
+    private RadioButton yellowBox;
+    private RadioButton pinkBox;
 
     // three label attributes for name, email, and phone
     private Label nameLabel;
-    private Label colorLabel;
-    private Label animalLabel;
+    private Label emailLabel;
+    private Label gNumLabel;
+    private Label errorLabel;
 
     // step 1: declare an imageview attribute
     private ImageView animal1;
@@ -53,8 +56,8 @@ public class InformationPane extends GridPane {
         monkeyButton = new Button("Monkey");
 
         // Step 2: instantiate a checkbox to change background colors
-        yellowBox = new CheckBox("Yellow Background");
-        pinkBox = new CheckBox("Pink Background");
+        yellowBox = new RadioButton("Yellow Background");
+        pinkBox = new RadioButton("Pink Background");
 
         // step 2 : // instantiate imageview
         // get the path of the file that contains the image
@@ -70,19 +73,22 @@ public class InformationPane extends GridPane {
         // instantiate name field
         nameField = new TextField();
         // instantiate email field
-        colorField = new TextField();
-        // instantiate phone field
-        animalField = new TextField();
+        emailField = new TextField();
+        // instantiate G-Number field
+        gNumField = new TextField();
+
+        errorField = new TextField();
 
         // instantiate label attributes
         nameLabel = new Label("Name: " + axel.getName());
-        colorLabel = new Label("Favorite Color: " + axel.getFavColor());
-        animalLabel = new Label("Favorite Animal: " + axel.getFavAnimal());
+        emailLabel = new Label("Email: " + axel.getemail());
+        gNumLabel = new Label("G-Number: " + axel.getgNumber());
+        errorLabel = new Label("Error: Use G at first");
 
         // add a label to the pane
         this.add(nameLabel, 15, 3);
-        this.add(colorLabel, 15, 5);
-        this.add(animalLabel, 15, 7);
+        this.add(emailLabel, 15, 5);
+        this.add(gNumLabel, 15, 7);
 
         // add a name field to the pane nex to the name label
         this.add(nameField, 15, 4);
