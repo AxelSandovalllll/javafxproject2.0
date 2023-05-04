@@ -1,10 +1,12 @@
 package edu.guilford;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -22,8 +24,6 @@ public class InformationPane extends GridPane {
     // add a textfield attribute for the phone
     private TextField gNumField;
 
-    private TextField errorField;
-
     // add a submit button attribute
     private Button submitButton;
     private Button lionButton;
@@ -38,7 +38,6 @@ public class InformationPane extends GridPane {
     private Label nameLabel;
     private Label emailLabel;
     private Label gNumLabel;
-    private Label errorLabel;
 
     // step 1: declare an imageview attribute
     private ImageView animal1;
@@ -77,13 +76,10 @@ public class InformationPane extends GridPane {
         // instantiate G-Number field
         gNumField = new TextField();
 
-        errorField = new TextField();
-
         // instantiate label attributes
         nameLabel = new Label("Name: " + axel.getName());
         emailLabel = new Label("Email: " + axel.getemail());
         gNumLabel = new Label("G-Number: " + axel.getgNumber());
-        errorLabel = new Label("Error: Use G at first");
 
         // add a label to the pane
         this.add(nameLabel, 15, 3);
@@ -93,9 +89,9 @@ public class InformationPane extends GridPane {
         // add a name field to the pane nex to the name label
         this.add(nameField, 15, 4);
         // add an email field to the pane next to the email label
-        this.add(colorField, 15, 6);
+        this.add(emailField, 15, 6);
         // add a phone field to the pane next to the phone label
-        this.add(animalField, 15, 8);
+        this.add(gNumField, 15, 8);
         // add a submit button to the pane
         this.add(submitButton, 15, 9);
         this.add(lionButton, 15, 12);
@@ -111,18 +107,43 @@ public class InformationPane extends GridPane {
         // steps 4 & 5: Write an event listener and connect it to the component that
         // triggers the event
         // add a listener for the button that changes the labels
-        submitButton.setOnAction(e -> {
+        submitButton.setOnAction(e ->
+
+        {
+
             // set the name label to the name field
-            nameLabel.setText("Name: " + nameField.getText());
+            // nameLabel.setText("Name: " + nameField.getText());
             // set the email label to the email field
-            colorLabel.setText("Favorite Color: " + colorField.getText());
+            // emailLabel.setText("Email " + emailField.getText());
             // set the phone label to the phone field
-            animalLabel.setText("Favorite Animal: " + animalField.getText());
+            // gNumLabel.setText("G-Number " + gNumField.getText());
             // update the individual attribute with the new data
-            axel.setName(nameField.getText());
-            axel.setFavColor(colorField.getText());
-            axel.setFavAnimal(animalField.getText());
+            // axel.setName(nameField.getText());
+            // axel.setemail(emailField.getText());
+            // axel.setgNumber(gNumField.getText());
             System.out.println(e.toString());
+
+            // when submit button is clicked, make sure name does not contain numbers
+            try {
+                validateName(nameField.getText());
+            } catch (InvalidNameException ex) {
+                nameError(ex.getMessage());
+            }
+
+            // when submit button is clicked, make sure email is not null using a try method
+            try {
+                validateEmail(emailField.getText());
+            } catch (InvalidEmailException ex) {
+                emailError(ex.getMessage());
+            }
+
+            // when submit button is clicked,try to validate the G-Number
+            try {
+                validateGNumber(gNumField.getText());
+            } catch (InvalidGNumberException ex) {
+                displayError(ex.getMessage());
+            }
+
         });
 
         // steps 4 & 5: Write an event listener and connect it to the component that
@@ -188,4 +209,89 @@ public class InformationPane extends GridPane {
         });
 
     }
+
+    // custom exception class that extends Exception and throw it if the G-Number is
+    // invalid
+    class InvalidGNumberException extends Exception {
+        public InvalidGNumberException(String message) {
+            super(message);
+        }
+    }
+
+    // custom exception class that extends Exception and throw it if the name is
+    // invalid
+    class InvalidNameException extends Exception {
+        public InvalidNameException(String message) {
+            super(message);
+        }
+    }
+
+    // custom exception class that extends Exception and throw it if the email is
+    // invalid
+    class InvalidEmailException extends Exception {
+        public InvalidEmailException(String message) {
+            super(message);
+        }
+    }
+
+    // method that validates the G-Number
+    // throws the custom exception if the G-Number is invalid
+    // otherwise, it removes the error label
+    private void validateGNumber(String gNum) throws InvalidGNumberException {
+        if (!gNum.startsWith("G") || gNum.contains("G... (Ex.G00734859)")) {
+            throw new InvalidGNumberException("G... (Ex.G00734859)");
+        } else {
+            gNumLabel.setText("G-Number: " + gNumField.getText());
+
+        }
+    }
+
+    // method that validates the email
+    // throws the custom exception if the email is invalid
+    // otherwise, it removes the error label
+    private void validateEmail(String email) throws InvalidEmailException {
+        if (!email.contains("@") || email.contains("Invalid Input: No @")) {
+            throw new InvalidEmailException("Invalid Input: No @");
+        } else {
+            emailLabel.setText("Email: " + emailField.getText());
+
+        }
+    }
+
+    // method that validates the name field to make sure it does not contain numbers
+    // throws the custom exception if the name is invalid
+    // otherwise, it removes the error label
+    private void validateName(String name) throws InvalidNameException {
+        if (name.matches(".*\\d.*") || name.contains("Invalid Input: No Numbers")) {
+            throw new InvalidNameException("Invalid Input: No Numbers");
+        } else {
+            nameLabel.setText("Name: " + nameField.getText());
+
+        }
+    }
+
+    // method that displays the error message for gnumber
+    private void displayError(String message) {
+        // instantiate the error label
+        gNumField.setText(message);
+
+    }
+
+    // method that displays the error message for email
+    private void emailError(String message) {
+        // instantiate the error label
+        emailField.setText(message);
+
+    }
+
+    // method that displays the error message for name
+    private void nameError(String message) {
+        // instantiate the error label
+        nameField.setText(message);
+
+    }
+
+    // Show the error label in your GUI, e.g., using a dialog or adding it to the
+    // scene
+
 }

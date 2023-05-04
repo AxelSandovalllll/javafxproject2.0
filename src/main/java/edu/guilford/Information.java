@@ -4,21 +4,21 @@ public class Information {
 
     // attributes
     private String name;
-    private String favColor;
-    private String favAnimal;
+    private String email;
+    private String gNumber;
 
     // constructor with default data
     public Information() {
         name = "John Doe";
-        favColor = "Blue";
-        favAnimal = "Dog";
+        email = "JDoe@gmail.com";
+        gNumber = "G-Number";
     }
 
     // constructor with parameters
-    public Information(String name, String favColor, String favAnimal) {
+    public Information(String name, String email, String gNumber) {
         this.name = name;
-        this.favColor = favColor;
-        this.favAnimal = favAnimal;
+        this.email = email;
+        this.gNumber = gNumber;
     }
 
     // getters and setters
@@ -30,20 +30,20 @@ public class Information {
         this.name = name;
     }
 
-    public String getFavColor() {
-        return favColor;
+    public String getemail() {
+        return email;
     }
 
-    public void setFavColor(String favColor) {
-        this.favColor = favColor;
+    public void setemail(String email) {
+        this.email = email;
     }
 
-    public String getFavAnimal() {
-        return favAnimal;
+    public String getgNumber() {
+        return gNumber;
     }
 
-    public void setFavAnimal(String favAnimal) {
-        this.favAnimal = favAnimal;
+    public void setgNumber(String gNumber) {
+        this.gNumber = gNumber;
     }
 
     // toString method
@@ -51,8 +51,8 @@ public class Information {
     public String toString() {
         return "Information{" +
                 "name='" + name + '\'' +
-                ", favColor='" + favColor + '\'' +
-                ", favAnimal='" + favAnimal + '\'' +
+                ", email='" + email + '\'' +
+                ", gNumber='" + gNumber + '\'' +
                 '}';
     }
 }

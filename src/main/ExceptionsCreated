@@ -1,0 +1,6 @@
+Name Exception - If Name entered has any numbers in it, the name will not update & it wil return an error message in the NameField
+
+Email Exception - If email entered does not contain an '@' symbol, then the program won't update, and it will return an error message in the emailField
+
+G-Number Exception - If G-Number isn't started with an Uppercase 'G', then the program won't update, and it will return an error message in the GNumField
+ 
